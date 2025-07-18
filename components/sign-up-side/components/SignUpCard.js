@@ -33,7 +33,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
 	}),
 }));
 
-export default function SignInCard() {
+export default function SignUpCard() {
 	const [emailError, setEmailError] = React.useState(false);
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
 	const [passwordError, setPasswordError] = React.useState(false);
@@ -97,7 +97,7 @@ export default function SignInCard() {
 				variant="h4"
 				sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
 			>
-				Log in
+				Register
 			</Typography>
 			<Box
 				component="form"
@@ -123,18 +123,6 @@ export default function SignInCard() {
 					/>
 				</FormControl>
 				<FormControl>
-					<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-						<FormLabel htmlFor="password">Password</FormLabel>
-						<MuiLink
-							component="button"
-							type="button"
-							onClick={handleClickOpen}
-							variant="body2"
-							sx={{ alignSelf: 'baseline' }}
-						>
-							Forgot your password?
-						</MuiLink>
-					</Box>
 					<TextField
 						error={passwordError}
 						helperText={passwordErrorMessage}
@@ -156,20 +144,20 @@ export default function SignInCard() {
 				/>
 				<ForgotPassword open={open} handleClose={handleClose} />
 				<Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
-					Log in
+					Register
 				</Button>
 				<Typography sx={{ textAlign: 'center' }}>
-					Don&apos;t have an account?{' '}
+					Already have an account?{' '}
 					<span>
-			            <MuiLink
-				            component={NextLink}
-				            href="/register"
-				            variant="body2"
-				            sx={{ alignSelf: 'center' }}
-			            >
-			              Register
-			            </MuiLink>
-					</span>
+            <MuiLink
+	            component={NextLink}
+	            href="/login"
+	            variant="body2"
+	            sx={{ alignSelf: 'center' }}
+            >
+              Login
+            </MuiLink>
+          </span>
 				</Typography>
 			</Box>
 			<Divider>or</Divider>
