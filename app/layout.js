@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { AuthProvider } from "@/hooks/useAuth";
 import Footer from "@/components/Footer";
 import "./globals.css";
+import { Box } from '@mui/material';
 
 export const metadata = {
 	title: "Eventory",
@@ -22,9 +23,13 @@ export default function RootLayout({ children }) {
 					<AppRouterCacheProvider options={{ enableCssLayer: true }}>
 						<AppTheme>
 							<CssBaseline />
-							<ResponsiveAppBar />
-							{children}
-							<Footer />
+							<Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+								<ResponsiveAppBar />
+								<Box component="main" sx={{ flex: 1 }}>
+									{children}
+								</Box>
+								<Footer />
+							</Box>
 						</AppTheme>
 					</AppRouterCacheProvider>
 				</AuthProvider>
