@@ -235,15 +235,7 @@ function ResponsiveAppBar() {
 									href="/login"
 									sx={{ color: 'white', textTransform: 'none', mr: 1 }}
 								>
-									Login
-								</Button>
-								<Button
-									component={Link}
-									href="/register"
-									variant="outlined"
-									sx={{ color: 'white', borderColor: 'white', textTransform: 'none' }}
-								>
-									Register
+									Are you a provider? Click here to login
 								</Button>
 							</>
 						)}
