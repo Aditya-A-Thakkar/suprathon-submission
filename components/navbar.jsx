@@ -34,17 +34,11 @@ function ResponsiveAppBar() {
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
 	};
-	const handleOpenUserMenu = (event) => {
-		setAnchorElUser(event.currentTarget);
-	};
 
 	const handleCloseNavMenu = () => {
 		setAnchorElNav(null);
 	};
 
-	const handleCloseUserMenu = () => {
-		setAnchorElUser(null);
-	};
 
 	return (
 		<AppBar position="static">
@@ -153,7 +147,7 @@ function ResponsiveAppBar() {
 							component={Link}
 							href="/post-requests"
 						>
-							Request to Post
+							Post Requests
 						</Button>) : null}
 						{user?.role === "ADMIN" ? (<Button
 							key="admin"
@@ -190,43 +184,21 @@ function ResponsiveAppBar() {
 					<Box sx={{ flexGrow: 0 }}>
 						{user ? (
 							<>
-								<Tooltip title="Open settings">
-									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-										<Avatar alt="Remy Sharp" src="/public/images/avatar/2.jpg" />
-									</IconButton>
-								</Tooltip>
-								<Menu
-									sx={{ mt: '45px' }}
-									id="menu-appbar"
-									anchorEl={anchorElUser}
-									anchorOrigin={{
-										vertical: 'top',
-										horizontal: 'right',
-									}}
-									keepMounted
-									transformOrigin={{
-										vertical: 'top',
-										horizontal: 'right',
-									}}
-									open={Boolean(anchorElUser)}
-									onClose={handleCloseUserMenu}
+								<Box sx={{ display: 'flex', gap: 2 }}>
+								<Button
+									component={Link}
+									href="/profile"
+									sx={{ color: 'white', textTransform: 'none' }}
 								>
-									{settings.map((setting) => (
-										<MenuItem
-											key={setting.label}
-											onClick={async () => {
-												handleCloseUserMenu();
-												if (setting.action === 'logout') {
-													await logout();
-												} else if (setting.path) {
-													router.push(setting.path);
-												}
-											}}
-										>
-											<Typography textAlign="center">{setting.label}</Typography>
-										</MenuItem>
-									))}
-								</Menu>
+									My Profile
+								</Button>
+								<Button
+									onClick={logout}
+									sx={{ color: 'white', textTransform: 'none' }}
+								>
+									Logout
+								</Button>
+								</Box>
 							</>
 						) : (
 							<>
