@@ -15,6 +15,7 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material';
+import ChangePassword from "@/components/ChangePassword";
 
 export default function ProfileLayout() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -22,6 +23,7 @@ export default function ProfileLayout() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  const [changePasswordOpen, setChangePasswordOpen] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -98,6 +100,11 @@ export default function ProfileLayout() {
               </Typography>
           )}
         </Stack>
+
+        <Button variant="outlined" onClick={() => setChangePasswordOpen(true)}>
+          Change Password
+        </Button>
+        <ChangePassword open={changePasswordOpen} onClose={() => setChangePasswordOpen(false)} />
 
         <Snackbar
             open={snackbar.open}
