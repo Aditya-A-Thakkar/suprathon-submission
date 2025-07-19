@@ -24,8 +24,8 @@ export default function PostCard({ post }) {
 				</Box>
 
 				<Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.1rem' }}>
-					Contact: <Link href={`mailto:${contactEmail}`} underline="hover">{contactEmail}</Link><br/>
-					Event Date: {new Date(startDateTime).toLocaleString()}
+					Contact: <Link href={`mailto:${contactEmail}`} underline="hover" sx ={{color: "primary.main", fontStyle: "italic"}}>{contactEmail}</Link><br/>
+					Event Date: <Box component="span" sx={{ fontWeight: 'bold' }}>{new Date(startDateTime).toLocaleString()}</Box>
 				</Typography>
 			</Paper>
 		</Box>

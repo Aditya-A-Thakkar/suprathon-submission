@@ -117,7 +117,7 @@ export default function ProfileLayout() {
           )}
         </Stack>
 
-        <Button variant="outlined" onClick={() => setChangePasswordOpen(true)}>
+        <Button variant="outlined" onClick={() => setChangePasswordOpen(true)} sx={{ mt: 3, mb: 1 }}>
           Change Password
         </Button>
         <ChangePassword open={changePasswordOpen} onClose={() => setChangePasswordOpen(false)} />
