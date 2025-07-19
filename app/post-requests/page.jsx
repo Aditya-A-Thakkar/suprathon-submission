@@ -20,7 +20,7 @@ import { DateTimePicker } from '@mui/x-date-pickers';
 export default function PostRequestPage() {
   const [submitted, setSubmitted] = useState(false);
   const [title, setTitle] = useState('');
-  const [type, setType] = useState('Workshop');
+  const [tag, setTag] = useState('Workshop');
   const [where, setWhere] = useState('');
   const [startDateTime, setStartDateTime] = useState(null);
   const [endDateTime, setEndDateTime] = useState(null);
@@ -33,7 +33,7 @@ export default function PostRequestPage() {
   threeMonthsLater.setMonth(today.getMonth() + 3);
 
   const handleSubmit = async () => {
-    if (!title || !type || !where || !startDateTime || !endDateTime || !description || !email) return;
+    if (!title || !tag || !where || !startDateTime || !endDateTime || !description || !email) return;
 
     try {
       const res = await fetch('/api/post-requests', {
@@ -41,7 +41,7 @@ export default function PostRequestPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title,
-          type,
+          tag,
           where,
           startDateTime,
           endDateTime,
@@ -102,8 +102,8 @@ export default function PostRequestPage() {
               <TextField
                 select
                 variant="outlined"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
                 required
                 sx={{ backgroundColor: 'white' }}
               >
