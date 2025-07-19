@@ -35,7 +35,7 @@ export default function PostRequestPage() {
   if (!posts.length) return <CircularProgress sx={{ m: 5 }} />;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 6 }}>
+    <Container maxWidth="lg" sx={{ mt: 1 }}>
       {/* Main layout */}
       <Stack
         direction={{ xs: 'column', md: 'row' }}
@@ -48,8 +48,8 @@ export default function PostRequestPage() {
           <Box
             sx={{
               display: 'grid',
-              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
-              gap: 4,
+              gridTemplateColumns: '1fr', // One post per row
+              gap: 1, // Reduced spacing between posts
             }}
           >
             {paginatedPosts.map((post) => (
@@ -61,7 +61,7 @@ export default function PostRequestPage() {
         {/* Sidebar section - 30% */}
         <Box sx={{ flex: 3 }}>
           {/* Help */}
-          <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 3 }}>
+          <Paper elevation={3} sx={{ mt: 5, p: 3, mb: 4, borderRadius: 3 }}>
             <Typography variant="h6" gutterBottom>
               Help
             </Typography>
@@ -105,7 +105,7 @@ export default function PostRequestPage() {
       </Stack>
 
       {/* Pagination below all */}
-      <Box display="flex" justifyContent="center" mt={6}>
+      <Box display="flex" justifyContent="center" mt={6} mb={8}>
         <Pagination
           count={totalPages}
           page={page}
