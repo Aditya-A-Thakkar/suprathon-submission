@@ -1,7 +1,7 @@
 import { Container, Paper, Typography, Box, Link } from '@mui/material';
 
 export default function PostCard({ post }) {
-	const { title, description, contactEmail, postedBy, eventDate } = post;
+	const { title, description, contactEmail, postedBy, startDateTime } = post;
 
 	return (
 		<Container sx={{ maxWidth: '1000px', mt: 10, mb: 12 }}>
@@ -25,7 +25,7 @@ export default function PostCard({ post }) {
 
 				<Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.1rem' }}>
 					Contact: <Link href={`mailto:${contactEmail}`} underline="hover">{contactEmail}</Link><br/>
-					Event Date: {new Date(eventDate).toLocaleDateString()}
+					Event Date: {new Date(startDateTime).toLocaleString()}
 				</Typography>
 			</Paper>
 		</Container>
