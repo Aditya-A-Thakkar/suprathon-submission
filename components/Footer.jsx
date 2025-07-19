@@ -1,0 +1,36 @@
+"use client";
+import { Box, Container, Typography, Link } from "@mui/material";
+
+export default function Footer() {
+	return (
+		<Box
+			component="footer"
+			sx={{
+				mt: 6,
+				py: 4,
+				backgroundColor: "#f5f5f5",
+				borderTop: "1px solid #ddd",
+			}}
+		>
+			<Container maxWidth="md">
+				<Typography
+					variant="h6"
+					align="center"
+					gutterBottom
+					sx={{ fontWeight: 600 }}
+				>
+					Feel free to reach out for any queries.
+				</Typography>
+				<Typography variant="body1" align="center">
+					Contact us at{" "}
+					<Link
+						href="mailto:shankhadeepg444@gmail.com"
+						sx={{ fontStyle: "italic", color: "primary.main" }}
+					>
+						shankhadeepg444@gmail.com
+					</Link>
+				</Typography>
+			</Container>
+		</Box>
+	);
+}
