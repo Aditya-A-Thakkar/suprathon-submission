@@ -13,6 +13,7 @@ import {
   ListItemText,
   Pagination,
   Stack,
+  Divider,
 } from '@mui/material';
 import PostCard from '@/components/postcard';
 
@@ -35,49 +36,33 @@ export default function PostRequestPage() {
   if (!posts.length) return <CircularProgress sx={{ m: 5 }} />;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 1 }}>
-      {/* Main layout */}
+    <Container maxWidth="lg" sx={{ mt: 6 }}>
+      <Typography variant="h4" fontWeight="bold" mb={3}>
+        Skilliton Events & Requests
+      </Typography>
+
       <Stack
         direction={{ xs: 'column', md: 'row' }}
-        alignItems="flex-start"
         spacing={4}
-        sx={{ width: '100%' }}
+        alignItems="flex-start"
       >
-        {/* Posts section - 70% */}
+        {/* Main Content Area */}
         <Box sx={{ flex: 7 }}>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: '1fr', // One post per row
-              gap: 1, // Reduced spacing between posts
-            }}
-          >
+          <Box display="flex" flexDirection="column" gap={2}>
             {paginatedPosts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </Box>
         </Box>
 
-        {/* Sidebar section - 30% */}
+        {/* Sidebar */}
         <Box sx={{ flex: 3 }}>
-          {/* Help */}
-          <Paper elevation={3} sx={{ mt: 5, p: 3, mb: 4, borderRadius: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Help
-            </Typography>
-            <Typography variant="body1">
-              Reach out at{' '}
-              <Link href="mailto:shankhadeepg444@gmail.com">
-                shankhadeepg444@gmail.com
-              </Link>
-            </Typography>
-          </Paper>
-
-          {/* Events */}
-          <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 3 }}>
-            <Typography variant="h6" gutterBottom>
+          {/* Upcoming Events */}
+          <Paper elevation={2} sx={{ p: 2, mb: 3, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight={600} gutterBottom>
               Upcoming Events
             </Typography>
+            <Divider sx={{ mb: 1 }} />
             <List dense>
               {['Hackathon – Aug 5', 'Workshop – Aug 12', 'Seminar – Aug 18'].map((event, idx) => (
                 <ListItem key={idx} disablePadding>
@@ -88,23 +73,42 @@ export default function PostRequestPage() {
           </Paper>
 
           {/* Quick Links */}
-          <Paper elevation={3} sx={{ p: 3, borderRadius: 3 }}>
-            <Typography variant="h6" gutterBottom>
+          <Paper elevation={2} sx={{ p: 2, mb: 3, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight={600} gutterBottom>
               Quick Links
             </Typography>
+            <Divider sx={{ mb: 1 }} />
             <List dense>
               <ListItem disablePadding>
-                <Link href="post-requests" underline="hover">Create a Post</Link>
+                <Link href="/post-requests" underline="hover" color="primary">
+                  Create a Post
+                </Link>
               </ListItem>
               <ListItem disablePadding>
-                <Link href="/faq" underline="hover">FAQ</Link>
+                <Link href="/faq" underline="hover" color="primary">
+                  FAQ
+                </Link>
               </ListItem>
             </List>
+          </Paper>
+
+          {/* Help Box */}
+          <Paper elevation={2} sx={{ p: 2, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight={600} gutterBottom>
+              Need Help?
+            </Typography>
+            <Divider sx={{ mb: 1 }} />
+            <Typography variant="body2">
+              Reach out at{' '}
+              <Link href="mailto:shankhadeepg444@gmail.com" underline="hover">
+                shankhadeepg444@gmail.com
+              </Link>
+            </Typography>
           </Paper>
         </Box>
       </Stack>
 
-      {/* Pagination below all */}
+      {/* Pagination */}
       <Box display="flex" justifyContent="center" mt={6} mb={8}>
         <Pagination
           count={totalPages}

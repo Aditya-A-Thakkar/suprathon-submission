@@ -1,33 +1,76 @@
-import { Container, Paper, Typography, Box, Link } from '@mui/material';
+import { Box, Paper, Typography, Link, Divider } from '@mui/material';
 
 export default function PostCard({ post }) {
-	const { title, description, contactEmail, postedBy, startDateTime } = post;
+  const { title, description, contactEmail, postedBy, startDateTime } = post;
 
-	return (
-		<Box sx={{ mt: 5, mb: 5, width: '100%' }}>
-			<Paper elevation={3} sx={{ p: 5, borderRadius: 4, maxWidth: '100%'}}>
-				<Typography variant="h4" align="center" gutterBottom sx={{ color: '#1800AD', fontWeight: 'bold' }}>
-					{title}
-				</Typography>
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Paper
+        variant="outlined"
+        sx={{
+          px: 3,
+          py: 2,
+          borderRadius: 2,
+          borderColor: 'grey.300',
+          bgcolor: '#fcfcfc',
+          boxShadow: 1,
+        }}
+      >
+        {/* Header */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            flexWrap: 'wrap',
+            mb: 1,
+          }}
+        >
+          <Typography
+            variant="h6"
+            fontWeight={600}
+            sx={{ color: 'primary.dark', fontSize: '1.2rem' }}
+          >
+            {title}
+          </Typography>
 
-				<Typography variant="h6" align="center" gutterBottom sx={{ color: 'text.secondary', mb: 5 }}>
-					Author –{' '}
-					<Box component="span" sx={{ color: '#1800AD', fontWeight: 700 }}>
-						{postedBy?.name ?? 'Unknown'}
-					</Box>
-				</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Posted by: <strong>{postedBy?.name ?? 'Unknown'}</strong>
+          </Typography>
+        </Box>
 
-				<Box sx={{ borderLeft: 4, borderColor: '#1800AD', pl: 3, my: 4 }}>
-					<Typography variant="body1" sx={{ fontSize: '1.15rem', lineHeight: 1.8 }}>
-						{description}
-					</Typography>
-				</Box>
+        <Divider sx={{ my: 1 }} />
 
-				<Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.1rem' }}>
-					Contact: <Link href={`mailto:${contactEmail}`} underline="hover" sx ={{color: "primary.main", fontStyle: "italic"}}>{contactEmail}</Link><br/>
-					Event Date: <Box component="span" sx={{ fontWeight: 'bold' }}>{new Date(startDateTime).toLocaleString()}</Box>
-				</Typography>
-			</Paper>
-		</Box>
-	);
+        {/* Description */}
+        <Typography
+          variant="body1"
+          sx={{
+            color: 'text.primary',
+            fontSize: '1rem',
+            lineHeight: 1.6,
+            whiteSpace: 'pre-line',
+            mb: 2,
+          }}
+        >
+          {description}
+        </Typography>
+
+        <Divider sx={{ my: 1 }} />
+
+        {/* Footer Info */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+          <Typography variant="body2" color="text.secondary">
+            📅 <strong>Event:</strong>{' '}
+            {new Date(startDateTime).toLocaleString()}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            📧 <strong>Contact:</strong>{' '}
+            <Link href={`mailto:${contactEmail}`} underline="hover">
+              {contactEmail}
+            </Link>
+          </Typography>
+        </Box>
+      </Paper>
+    </Box>
+  );
 }
