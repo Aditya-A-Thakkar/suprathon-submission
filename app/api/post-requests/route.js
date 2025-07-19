@@ -6,11 +6,36 @@ const prisma = new PrismaClient();
 
 export async function POST(req) {
 	try {
-		const { title, eventDate, description, contactEmail } = await req.json();
+		const {
+			title,
+			eventDate,
+			startTime,
+			endTime,
+			description,
+			contactEmail,
+			type,
+			where
+		} = await req.json();
 
-		if (!title || !eventDate || !description || !contactEmail) {
-			return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+		if (
+			!title ||
+			!eventDate ||
+			!startTime ||
+			!endTime ||
+			!description ||
+			!contactEmail ||
+			!type ||
+			!where
+		) {
+			return NextResponse.json(
+				{ error: 'Missing required fields' },
+				{ status: 400 }
+			);
 		}
+
+		// Combine eventDate with time fields into full ISO strings
+		const startDateTime = new Date(`${eventDate}T${startTime}`);
+		const endDateTime = new Date(`${eventDate}T${endTime}`);
 
 		// Get user ID from token
 		const user = await getUserFromToken();
@@ -21,9 +46,12 @@ export async function POST(req) {
 		const post = await prisma.eventPost.create({
 			data: {
 				title,
-				eventDate: new Date(eventDate),
 				description,
 				contactEmail,
+				type,
+				where,
+				startDateTime,
+				endDateTime,
 				userId: user.id,
 			},
 		});
