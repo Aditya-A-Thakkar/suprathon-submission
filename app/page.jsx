@@ -12,6 +12,7 @@ import {
   ListItem,
   ListItemText,
   Pagination,
+  Stack,
 } from '@mui/material';
 import PostCard from '@/components/postcard';
 
@@ -36,12 +37,11 @@ export default function PostRequestPage() {
   return (
     <Container maxWidth="lg" sx={{ mt: 6 }}>
       {/* Main layout */}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          gap: 4,
-        }}
+      <Stack
+        direction={{ xs: 'column', md: 'row' }}
+        alignItems="flex-start"
+        spacing={4}
+        sx={{ width: '100%' }}
       >
         {/* Posts section - 70% */}
         <Box sx={{ flex: 7 }}>
@@ -105,7 +105,7 @@ export default function PostRequestPage() {
             </List>
           </Paper>
         </Box>
-      </Box>
+      </Stack>
 
       {/* Pagination below all */}
       <Box display="flex" justifyContent="center" mt={6}>
