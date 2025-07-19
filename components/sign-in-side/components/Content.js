@@ -7,6 +7,8 @@ import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import { SitemarkIcon } from './CustomIcons';
+import Image from 'next/image';
+import CircuitCircle from "@/public/images/CircuitCircle.jpeg";
 
 const items = [
 	{
@@ -56,6 +58,7 @@ export default function Content() {
 			{/*		</div>*/}
 			{/*	</Stack>*/}
 			{/*))}*/}
+			<Image src={CircuitCircle} alt="Circuit" />
 		</Stack>
 	);
 }
