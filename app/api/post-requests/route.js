@@ -8,23 +8,21 @@ export async function POST(req) {
 	try {
 		const {
 			title,
-			eventDate,
-			startTime,
-			endTime,
+			endDateTime,
+			startDateTime,
 			description,
 			contactEmail,
-			type,
+			tag,
 			where
 		} = await req.json();
 
 		if (
 			!title ||
-			!eventDate ||
-			!startTime ||
-			!endTime ||
+			!endDateTime ||
+			!startDateTime ||
 			!description ||
 			!contactEmail ||
-			!type ||
+			!tag ||
 			!where
 		) {
 			return NextResponse.json(
@@ -32,10 +30,6 @@ export async function POST(req) {
 				{ status: 400 }
 			);
 		}
-
-		// Combine eventDate with time fields into full ISO strings
-		const startDateTime = new Date(`${eventDate}T${startTime}`);
-		const endDateTime = new Date(`${eventDate}T${endTime}`);
 
 		// Get user ID from token
 		const user = await getUserFromToken();
@@ -48,7 +42,7 @@ export async function POST(req) {
 				title,
 				description,
 				contactEmail,
-				type,
+				tag,
 				where,
 				startDateTime,
 				endDateTime,

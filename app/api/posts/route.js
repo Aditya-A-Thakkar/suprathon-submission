@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export async function GET() {
 	const posts = await prisma.eventPost.findMany({
 		where: { approved: true },
-		orderBy: { eventDate: 'desc' },
+		orderBy: { startDateTime: 'desc' },
 		include: { postedBy: { select: { name: true, email: true } } },
 	});
 
