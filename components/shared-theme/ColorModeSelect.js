@@ -1,7 +1,8 @@
 import { useColorScheme } from '@mui/material/styles';
+import { useEffect } from "react";
 
 export default function ColorModeSelect(props) {
-	const { mode1, setMode } = useColorScheme();
-	const mode = "light";
+	const { mode, setMode } = useColorScheme();
+	useEffect(() => setMode('light'), [mode, setMode]);
 	return null;
 }
