@@ -25,7 +25,7 @@ export default function Footer() {
 					Contact us at{" "}
 					<Link
 						href="mailto:shankhadeepg444@gmail.com"
-						sx={{ fontStyle: "italic", color: "primary.main" }}
+						sx={{ fontStyle: "italic", color: "#1800AD" }}
 					>
 						shankhadeepg444@gmail.com
 					</Link>

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
 import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
-import { SitemarkIcon } from './CustomIcons';
+import FinalCircleFinal from "@/public/images/FinalCircleFinal.jpeg";
+import Image from "next/image";
 
 const items = [
 	{
@@ -38,24 +38,11 @@ const items = [
 export default function Content() {
 	return (
 		<Stack
-			sx={{ flexDirection: 'column', alignSelf: 'center', gap: 4, maxWidth: 450 }}
+			sx={{ flexDirection: 'column', alignSelf: 'center', gap: 4, maxWidth: 450, display: { xs: 'none', md: 'none', lg: 'flex' } }}
 		>
-			<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-				<SitemarkIcon />
+			<Box>
+				<Image src={FinalCircleFinal} alt="Circuit" width={400} />
 			</Box>
-			{items.map((item, index) => (
-				<Stack key={index} direction="row" sx={{ gap: 2 }}>
-					{item.icon}
-					<div>
-						<Typography gutterBottom sx={{ fontWeight: 'medium' }}>
-							{item.title}
-						</Typography>
-						<Typography variant="body2" sx={{ color: 'text.secondary' }}>
-							{item.description}
-						</Typography>
-					</div>
-				</Stack>
-			))}
 		</Stack>
 	);
 }

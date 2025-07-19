@@ -13,7 +13,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { GoogleIcon, FacebookIcon } from './CustomIcons';
 import { useRouter } from "next/navigation";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -111,9 +111,6 @@ export default function SignInCard() {
 
 	return (
 		<Card variant="outlined">
-			<Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-				<SitemarkIcon />
-			</Box>
 			<Typography
 				component="h1"
 				variant="h4"
@@ -142,6 +139,10 @@ export default function SignInCard() {
 						fullWidth
 						variant="outlined"
 						color={emailError ? 'error' : 'primary'}
+						sx={{'& .MuiInputBase-input::placeholder': {
+							color: 'gray',
+							opacity: 1,
+						}}}
 					/>
 				</FormControl>
 				<FormControl>
@@ -170,6 +171,10 @@ export default function SignInCard() {
 						fullWidth
 						variant="outlined"
 						color={passwordError ? 'error' : 'primary'}
+						sx={{'& .MuiInputBase-input::placeholder': {
+							color: 'gray',
+							opacity: 1,
+						}}}
 					/>
 				</FormControl>
 				<FormControlLabel
@@ -203,14 +208,6 @@ export default function SignInCard() {
 					startIcon={<GoogleIcon />}
 				>
 					Sign in with Google
-				</Button>
-				<Button
-					fullWidth
-					variant="outlined"
-					onClick={() => alert('Sign in with Facebook')}
-					startIcon={<FacebookIcon />}
-				>
-					Sign in with Facebook
 				</Button>
 			</Box>
 		</Card>

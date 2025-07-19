@@ -71,7 +71,7 @@ function ResponsiveAppBar() {
 		<AppBar position="static">
 			<Container maxWidth="xl" sx={{ backgroundColor: '#1800AD' }}>
 				<Toolbar disableGutters>
-					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+					<AdbIcon sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} />
 					<Typography
 						variant="h6"
 						noWrap
@@ -79,7 +79,7 @@ function ResponsiveAppBar() {
 						href="/"
 						sx={{
 							mr: 2,
-							display: { xs: 'none', md: 'flex' },
+							display: { xs: 'none', sm: 'flex' },
 							fontFamily: 'monospace',
 							fontWeight: 700,
 							letterSpacing: '.3rem',
@@ -90,7 +90,7 @@ function ResponsiveAppBar() {
 						EVENTORY
 					</Typography>
 
-					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+					{user ? <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
 						<IconButton
 							size="large"
 							aria-label="account of current user"
@@ -116,16 +116,17 @@ function ResponsiveAppBar() {
 							open={Boolean(anchorElNav)}
 							onClose={handleCloseNavMenu}
 							sx={{ display: { xs: 'block', md: 'none' } }}
+							disableScrollLock
 						>
-							{user ? (<MenuItem key="post-request" onClick={handleCloseNavMenu}>
-								<Typography sx={{ textAlign: 'center' }}>Request to Post</Typography>
-							</MenuItem>) : null}
+							<MenuItem key="post-request" onClick={handleCloseNavMenu}>
+								<Typography component={Link} href="/post-requests" sx={{ textAlign: 'center', textDecoration: 'none', color: 'black' }}>Request to Post</Typography>
+							</MenuItem>
 							{user?.role === "ADMIN" ? (<MenuItem key="admin" onClick={handleCloseNavMenu}>
-								<Typography sx={{ textAlign: 'center' }}>Admin Panel</Typography>
+								<Typography component={Link} href="/admin" sx={{ textAlign: 'center', textDecoration: 'none', color: 'black' }}>Admin Panel</Typography>
 							</MenuItem>) : null}
 						</Menu>
-					</Box>
-					<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+					</Box> : null}
+					<AdbIcon sx={{ display: { xs: 'flex', sm: 'none' }, mr: 1, ml: 1 }} />
 					<Typography
 						variant="h5"
 						noWrap
@@ -133,18 +134,19 @@ function ResponsiveAppBar() {
 						href="/"
 						sx={{
 							mr: 2,
-							display: { xs: 'flex', md: 'none' },
+							display: { xs: 'flex', sm: 'none' },
+							visibility: 'hidden',
 							flexGrow: 1,
 							fontFamily: 'monospace',
 							fontWeight: 700,
-							letterSpacing: '.3rem',
+							letterSpacing: '1.5rem',
 							color: 'inherit',
 							textDecoration: 'none',
 						}}
 					>
-						LOGO
+						Eventory
 					</Typography>
-					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+					<Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
 						{user ? (<Button
 							key="post-requests"
 							onClick={handleCloseNavMenu}
@@ -154,9 +156,10 @@ function ResponsiveAppBar() {
 								display: 'block',
 								margin: '0 2%',
 								position: 'relative',
-								fontSize: '1.05rem',
+								fontSize: { sm: '.9rem', md: '1.05rem' },
 								fontWeight: 500,
 								fontFamily: 'inherit',
+								alignContent: 'center',
 								'&:after': {
 									content: '""',
 									position: 'absolute',
@@ -188,9 +191,10 @@ function ResponsiveAppBar() {
 								display: 'block',
 								margin: '0 2%',
 								position: 'relative',
-								fontSize: '1.05rem',
+								fontSize: { sm: '.9rem', md: '1.05rem' },
 								fontWeight: 500,
 								fontFamily: 'inherit',
+								alignContent: 'center',
 								'&:after': {
 									content: '""',
 									position: 'absolute',
@@ -223,8 +227,9 @@ function ResponsiveAppBar() {
 									href="/profile"
 									sx={{ color: 'white', 
 										textTransform: 'none',
-										fontSize: '1.05rem',
+										fontSize: { sm: '.9rem', md: '1.05rem' },
 										fontWeight: 500,
+										alignContent: 'center',
 										'&:after': {
 											content: '""',
 											position: 'absolute',
@@ -243,14 +248,15 @@ function ResponsiveAppBar() {
 										} 
 									}}
 								>
-									My Profile
+									Profile
 								</Button>
 								<Button
 									onClick={logout}
 									sx={{ color: 'white', 
 										textTransform: 'none',
-										fontSize: '1.05rem',
+										fontSize: { sm: '.9rem', md: '1.05rem' },
 										fontWeight: 500,
+										alignContent: 'center',
 										'&:after': {
 											content: '""',
 											position: 'absolute',

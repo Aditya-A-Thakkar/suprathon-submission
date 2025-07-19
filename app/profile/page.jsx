@@ -87,6 +87,11 @@ export default function ProfileLayout() {
             </Card>
         )}
 
+          <Button variant="outlined" onClick={() => setChangePasswordOpen(true)} sx={{ mb: 3, mt: -1 }}>
+              Change Password
+          </Button>
+          <ChangePassword open={changePasswordOpen} onClose={() => setChangePasswordOpen(false)} />
+
         <Tabs value={tabIndex} onChange={(e, val) => setTabIndex(val)} sx={{ mb: 2 }}>
           <Tab label="Pending" />
           <Tab label="Accepted" />
@@ -116,11 +121,6 @@ export default function ProfileLayout() {
               </Typography>
           )}
         </Stack>
-
-        <Button variant="outlined" onClick={() => setChangePasswordOpen(true)} sx={{ mt: 3, mb: 1 }}>
-          Change Password
-        </Button>
-        <ChangePassword open={changePasswordOpen} onClose={() => setChangePasswordOpen(false)} />
 
         <Snackbar
             open={snackbar.open}

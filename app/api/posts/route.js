@@ -5,18 +5,26 @@ import { verifyJWT } from '@/lib/auth';
 const prisma = new PrismaClient();
 
 // GET all approved posts
-export async function GET() {
+export async function GET(req) {
+	const { searchParams } = new URL(req.url);
+	const page = parseInt(searchParams.get('page') || '10');
+	const limit = parseInt(searchParams.get('limit') || '4');
+	const sortBy = parseInt(searchParams.get('sort') || '0');
+
 	const posts = await prisma.eventPost.findMany({
 		where: { approved: true },
-		orderBy: { startDateTime: 'desc' },
+		orderBy: sortBy === 1 ? { startDateTime: 'asc' } : { createdAt: 'desc' },
+		skip: (page - 1) * limit,
+		take: limit,
 		include: {
 			postedBy: {
 				select: { name: true, email: true },
 			},
 		},
 	});
+	const totalCount = await prisma.eventPost.count({ where: { approved: true } });
 
-	return NextResponse.json(posts);
+	return NextResponse.json({ posts, totalCount });
 }
 
 // POST a new event post

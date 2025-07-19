@@ -78,7 +78,7 @@ export default function PostRequestPage() {
             variant="h4"
             align="center"
             gutterBottom
-            sx={{ fontWeight: 'bold', color: 'primary.main' }}
+            sx={{ fontWeight: 'bold', color: '#1800AD' }}
           >
             MAKE A POST REQUEST
           </Typography>
@@ -124,7 +124,10 @@ export default function PostRequestPage() {
                 onChange={(e) => setWhere(e.target.value)}
                 placeholder="Please specify the location or platform"
                 required
-                sx={{ backgroundColor: 'white' }}
+                sx={{ backgroundColor: 'white', '& .MuiInputBase-input::placeholder': {
+                  color: 'gray',
+                  opacity: 1,
+                } }}
               />
             </FormControl>
 

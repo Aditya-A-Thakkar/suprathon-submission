@@ -2,7 +2,6 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
 import AppTheme from '../shared-theme/AppTheme';
-import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import SignInCard from './components/SignInCard';
 import Content from './components/Content';
 
@@ -50,6 +49,8 @@ export default function SignInSide(props) {
 							gap: { xs: 6, sm: 12 },
 							p: { xs: 2, sm: 4 },
 							m: 'auto',
+							width: '130%',
+							ml: { xs: '-15%', md: 'auto' },
 						}}
 					>
 						<Content />

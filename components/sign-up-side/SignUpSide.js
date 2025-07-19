@@ -55,6 +55,8 @@ export default function SignInSide(props) {
 							gap: { xs: 6, sm: 12 },
 							p: { xs: 2, sm: 4 },
 							m: 'auto',
+							width: '130%',
+							ml: { xs: '-15%', md: 'auto' },
 						}}
 					>
 						<Content />

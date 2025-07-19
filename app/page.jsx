@@ -7,7 +7,6 @@ import {
   Typography,
   Paper,
   CircularProgress,
-  Link,
   List,
   ListItem,
   ListItemText,
@@ -15,30 +14,41 @@ import {
   Stack,
   Divider,
 } from '@mui/material';
+import MuiLink from "@mui/material/Link";
+import NextLink from "next/link";
 import PostCard from '@/components/postcard';
 
 export default function PostRequestPage() {
   const [posts, setPosts] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+  const [totalPosts, setTotalPosts] = useState(0);
   const [page, setPage] = useState(1);
   const postsPerPage = 4;
 
   useEffect(() => {
-    fetch('/api/posts')
-      .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((err) => console.error('Error loading posts:', err));
-  }, []);
+    // Main paginated posts
+    fetch(`/api/posts?page=${page}&limit=${postsPerPage}`)
+        .then(res => res.json())
+        .then(data => {
+          setPosts(data.posts);
+          setTotalPosts(data.totalCount);
+        });
 
-  const totalPages = Math.ceil(posts.length / postsPerPage);
-  const paginatedPosts = posts.slice((page - 1) * postsPerPage, page * postsPerPage);
+    // Sidebar: upcoming events (max 10)
+    fetch(`/api/posts?page=1&limit=10&sort=1`)
+        .then(res => res.json())
+        .then(data => setUpcoming(data.posts));
+  }, [page]);
+
+  const totalPages = Math.ceil(totalPosts / postsPerPage);
   const handlePageChange = (_, value) => setPage(value);
 
   if (!posts.length) return <CircularProgress sx={{ m: 5 }} />;
 
   return (
     <Container maxWidth="lg" sx={{ mt: 6 }}>
-      <Typography variant="h4" fontWeight="bold" mb={3}>
-        Skilliton Events & Requests
+      <Typography variant="h3" fontWeight="bold" mb={3}>
+        Eventory Events
       </Typography>
 
       <Stack
@@ -47,16 +57,16 @@ export default function PostRequestPage() {
         alignItems="flex-start"
       >
         {/* Main Content Area */}
-        <Box sx={{ flex: 7 }}>
+        <Box sx={{ flex: 7 }} width={{xs: "100%", md: "50%"}}>
           <Box display="flex" flexDirection="column" gap={2}>
-            {paginatedPosts.map((post) => (
+            {posts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </Box>
         </Box>
 
         {/* Sidebar */}
-        <Box sx={{ flex: 3 }}>
+        <Box display={{ xs: 'none', md: 'flex' }} flexDirection="column">
           {/* Upcoming Events */}
           <Paper elevation={2} sx={{ p: 2, mb: 3, borderRadius: 2 }}>
             <Typography variant="h6" fontWeight={600} gutterBottom>
@@ -64,10 +74,12 @@ export default function PostRequestPage() {
             </Typography>
             <Divider sx={{ mb: 1 }} />
             <List dense>
-              {['Hackathon – Aug 5', 'Workshop – Aug 12', 'Seminar – Aug 18'].map((event, idx) => (
-                <ListItem key={idx} disablePadding>
-                  <ListItemText primary={event} />
-                </ListItem>
+              {upcoming.map((event, idx) => (
+                  <ListItem key={idx} disablePadding>
+                    <ListItemText
+                        primary={`${event.title} – ${new Date(event.startDateTime).toLocaleDateString()}`}
+                    />
+                  </ListItem>
               ))}
             </List>
           </Paper>
@@ -80,14 +92,9 @@ export default function PostRequestPage() {
             <Divider sx={{ mb: 1 }} />
             <List dense>
               <ListItem disablePadding>
-                <Link href="/post-requests" underline="hover" color="primary">
+                <MuiLink component={NextLink} href="/post-requests" underline="hover" color="primary">
                   Create a Post
-                </Link>
-              </ListItem>
-              <ListItem disablePadding>
-                <Link href="/faq" underline="hover" color="primary">
-                  FAQ
-                </Link>
+                </MuiLink>
               </ListItem>
             </List>
           </Paper>
@@ -100,9 +107,9 @@ export default function PostRequestPage() {
             <Divider sx={{ mb: 1 }} />
             <Typography variant="body2">
               Reach out at{' '}
-              <Link href="mailto:shankhadeepg444@gmail.com" underline="hover">
+              <MuiLink component={NextLink} href="mailto:shankhadeepg444@gmail.com" underline="hover" fontStyle="italic" color="#1800AD">
                 shankhadeepg444@gmail.com
-              </Link>
+              </MuiLink>
             </Typography>
           </Paper>
         </Box>

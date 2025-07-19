@@ -71,7 +71,7 @@ export default function AdminEventPage() {
             <Typography>No pending events.</Typography>
           ) : (
             eventPosts.map(post => (
-              <Card key={post.id} variant="outlined" sx={{ width: "40%" }} >
+              <Card key={post.id} variant="outlined" sx={{ width: { xs: "100%", sm: "70%", md: "40%" } }} >
                 <CardContent>
                     <Typography variant="h6" gutterBottom>
                         {post.title}

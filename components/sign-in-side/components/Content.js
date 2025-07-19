@@ -6,7 +6,7 @@ import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import Image from 'next/image';
-import CircuitCircle from "@/public/images/CircuitCircleFinal.png";
+import CircuitCircle from "@/public/images/FinalCircleFinal.jpeg";
 
 const items = [
 	{
@@ -38,7 +38,7 @@ const items = [
 export default function Content() {
 	return (
 		<Stack
-			sx={{ flexDirection: 'column', alignSelf: 'center', gap: 4, maxWidth: 450 }}
+			sx={{ flexDirection: 'column', alignSelf: 'center', gap: 4, maxWidth: 450, display: { xs: 'none', md: 'none', lg: 'flex' } }}
 		>
 			{/*<Box sx={{ display: { xs: 'none', md: 'flex' } }}>*/}
 			{/*	<SitemarkIcon />*/}
@@ -56,8 +56,8 @@ export default function Content() {
 			{/*		</div>*/}
 			{/*	</Stack>*/}
 			{/*))}*/}
-			<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-				<Image src={CircuitCircle} alt="Circuit" width={600} />
+			<Box>
+				<Image src={CircuitCircle} alt="Circuit" width={400} />
 			</Box>
 		</Stack>
 	);

@@ -1,7 +1,7 @@
 import { Box, Paper, Typography, Link, Divider } from '@mui/material';
 
 export default function PostCard({ post }) {
-  const { title, description, contactEmail, postedBy, startDateTime } = post;
+  const { title, description, contactEmail, postedBy, startDateTime, updatedAt } = post;
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -24,18 +24,19 @@ export default function PostCard({ post }) {
             alignItems: 'baseline',
             flexWrap: 'wrap',
             mb: 1,
+              flexDirection: {xs: 'column', sm: 'row'},
           }}
         >
           <Typography
             variant="h6"
             fontWeight={600}
-            sx={{ color: 'primary.dark', fontSize: '1.2rem' }}
+            sx={{ color: '#000', fontSize: '1.2rem' }}
           >
             {title}
           </Typography>
 
-          <Typography variant="body2" color="text.secondary">
-            Posted by: <strong>{postedBy?.name ?? 'Unknown'}</strong>
+          <Typography variant="body2">
+            Posted by: <Typography variant="strong" color="#1800AD" sx={{ fontWeight: "bold" }}>{postedBy?.name ?? 'Unknown'}</Typography>
           </Typography>
         </Box>
 
@@ -59,15 +60,19 @@ export default function PostCard({ post }) {
 
         {/* Footer Info */}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-          <Typography variant="body2" color="text.secondary">
-            📅 <strong>Event:</strong>{' '}
-            {new Date(startDateTime).toLocaleString()}
+          <Typography variant="body2">
+            Event:{' '}
+	          <strong>{new Date(startDateTime).toLocaleString()}</strong>
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            📧 <strong>Contact:</strong>{' '}
-            <Link href={`mailto:${contactEmail}`} underline="hover">
+          <Typography variant="body2">
+            Contact:{' '}
+            <Link href={`mailto:${contactEmail}`} underline="hover" sx={{ fontStyle: "italic", color: "#1800AD" }}>
               {contactEmail}
             </Link>
+          </Typography>
+            <Typography variant="body2">
+            Posted on:{' '}
+                {new Date(updatedAt).toLocaleString()}
           </Typography>
         </Box>
       </Paper>
