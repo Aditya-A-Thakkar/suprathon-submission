@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { useRouter } from "next/navigation";
 
 const Card = styled(MuiCard)(({ theme }) => ({
 	display: 'flex',
@@ -34,6 +35,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export default function SignInCard() {
+	const router = useRouter();
 	const [emailError, setEmailError] = React.useState(false);
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
 	const [passwordError, setPasswordError] = React.useState(false);
@@ -48,16 +50,36 @@ export default function SignInCard() {
 		setOpen(false);
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
+		event.preventDefault();
 		if (emailError || passwordError) {
-			event.preventDefault();
 			return;
 		}
+
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get('email'),
-			password: data.get('password'),
-		});
+		const email = data.get('email');
+		const password = data.get('password');
+
+		try {
+			const res = await fetch('/api/auth/login', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email, password }),
+			});
+
+			const result = await res.json();
+			if (!res.ok) {
+				alert(result.error || 'Login failed');
+				console.log(result.error);
+				return;
+			}
+
+			// Redirect to protected page
+			router.push('/post-requests');
+		} catch (err) {
+			console.error(err);
+			alert(`Something went wrong:- ${err}`);
+		}
 	};
 
 	const validateInputs = () => {

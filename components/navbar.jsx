@@ -16,12 +16,18 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [
+	{ label: 'Profile', path: '/profile' },
+	{ label: 'Account', path: '/account' },
+	{ label: 'Dashboard', path: '/dashboard' },
+	{ label: 'Logout', action: 'logout' }
+];
 
 function ResponsiveAppBar() {
-	const { user } = useAuth();
+	const { user, logout } = useAuth();
+	const router = useRouter();
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -90,11 +96,12 @@ function ResponsiveAppBar() {
 							onClose={handleCloseNavMenu}
 							sx={{ display: { xs: 'block', md: 'none' } }}
 						>
-							{pages.map((page) => (
-								<MenuItem key={page} onClick={handleCloseNavMenu}>
-									<Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-								</MenuItem>
-							))}
+							{user ? (<MenuItem key="post-request" onClick={handleCloseNavMenu}>
+								<Typography sx={{ textAlign: 'center' }}>Request to Post</Typography>
+							</MenuItem>) : null}
+							{user?.role === "ADMIN" ? (<MenuItem key="admin" onClick={handleCloseNavMenu}>
+								<Typography sx={{ textAlign: 'center' }}>Admin Panel</Typography>
+							</MenuItem>) : null}
 						</Menu>
 					</Box>
 					<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -117,39 +124,68 @@ function ResponsiveAppBar() {
 						LOGO
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-						{pages.map((page) => (
-							<Button
-								key={page}
-								onClick={handleCloseNavMenu}
-								sx={{
-									my: 2,
-									color: 'white',
-									display: 'block',
-									margin: '0 2%',
-									position: 'relative',
-									'&:after': {
-										content: '""',
-										position: 'absolute',
-										width: 0,
-										height: '2px',
-										bottom: 0,
-										left: 0,
-										backgroundColor: 'white',
-										transition: 'width 0.3s',
-									},
-									'&:hover': {
-										backgroundColor: 'transparent',
-									},
-									'&:hover:after': {
-										width: '100%',
-									},
-								}}
-								component={Link}
-								href={`/${page.toLowerCase()}`}
-							>
-								{page}
-							</Button>
-						))}
+						{user ? (<Button
+							key="post-requests"
+							onClick={handleCloseNavMenu}
+							sx={{
+								my: 2,
+								color: 'white',
+								display: 'block',
+								margin: '0 2%',
+								position: 'relative',
+								'&:after': {
+									content: '""',
+									position: 'absolute',
+									width: 0,
+									height: '2px',
+									bottom: 0,
+									left: 0,
+									backgroundColor: 'white',
+									transition: 'width 0.3s',
+								},
+								'&:hover': {
+									backgroundColor: 'transparent',
+								},
+								'&:hover:after': {
+									width: '100%',
+								},
+							}}
+							component={Link}
+							href="/post-requests"
+						>
+							Request to Post
+						</Button>) : null}
+						{user?.role === "ADMIN" ? (<Button
+							key="admin"
+							onClick={handleCloseNavMenu}
+							sx={{
+								my: 2,
+								color: 'white',
+								display: 'block',
+								margin: '0 2%',
+								position: 'relative',
+								'&:after': {
+									content: '""',
+									position: 'absolute',
+									width: 0,
+									height: '2px',
+									bottom: 0,
+									left: 0,
+									backgroundColor: 'white',
+									transition: 'width 0.3s',
+								},
+								'&:hover': {
+									backgroundColor: 'transparent',
+								},
+								'&:hover:after': {
+									width: '100%',
+								},
+							}}
+							component={Link}
+							href="/admin"
+						>
+							Admin Panel
+						</Button>) : null}
 					</Box>
 					<Box sx={{ flexGrow: 0 }}>
 						{user ? (
@@ -176,8 +212,18 @@ function ResponsiveAppBar() {
 									onClose={handleCloseUserMenu}
 								>
 									{settings.map((setting) => (
-										<MenuItem key={setting} onClick={handleCloseUserMenu}>
-											<Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+										<MenuItem
+											key={setting.label}
+											onClick={async () => {
+												handleCloseUserMenu();
+												if (setting.action === 'logout') {
+													await logout();
+												} else if (setting.path) {
+													router.push(setting.path);
+												}
+											}}
+										>
+											<Typography textAlign="center">{setting.label}</Typography>
 										</MenuItem>
 									))}
 								</Menu>

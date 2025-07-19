@@ -23,43 +23,13 @@ export default function AdminEventPage() {
   const [loading, setLoading] = useState(true);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  const USE_MOCK = true; // Toggle this
-
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
       try {
-        if (USE_MOCK) {
-          // 🧪 MOCK event posts
-          const mock = [
-            {
-              id: '1',
-              title: 'AI Seminar',
-              description: 'An insightful seminar on AI trends. lorem ipsum dolor sit amet, consectetur adipiscing elit. aaaaaaaaaaaaaaaaaaaaaa nnnnnnnnnnnnnnnnnnnn gwyhkjsfuydihlsfgucdhbkxjdhvd aufwvtguhidqvcgwidbjksbvciywgvhusba bxqsiufvwgdbhxnsgvbdwhnxbdw gvechbdwvgfybhcdnbvgfhebdjnfb',
-              eventDate: new Date().toISOString(),
-              contactEmail: 'ai@event.com',
-              approved: false,
-              userId: 'u1',
-              postedBy: { name: 'Alice', email: 'alice@example.com' },
-            },
-            {
-              id: '2',
-              title: 'Math Symposium',
-              description: 'Advanced topics in combinatorics.',
-              eventDate: new Date(Date.now() + 86400000).toISOString(), // tomorrow
-              contactEmail: 'math@event.com',
-              approved: false,
-              userId: 'u2',
-              postedBy: { name: 'Bob', email: 'bob@example.com' },
-            },
-          ];
-          await new Promise(r => setTimeout(r, 500));
-          setEventPosts(mock);
-        } else {
-          const res = await fetch('/api/admin/event-posts');
-          const data = await res.json();
-          setEventPosts(data);
-        }
+        const res = await fetch('/api/admin/event-posts');
+        const data = await res.json();
+        setEventPosts(data);
       } catch (err) {
         console.error('Fetch failed', err);
         setSnackbar({ open: true, message: 'Error loading event posts', severity: 'error' });
@@ -69,24 +39,19 @@ export default function AdminEventPage() {
     };
 
     fetchEvents();
-  }, [USE_MOCK]);
+  }, []);
 
   const handleAction = async (id, action) => {
     try {
-      if (USE_MOCK) {
-        setEventPosts(prev => prev.filter(p => p.id !== id));
-        setSnackbar({ open: true, message: `Mock ${action} successful`, severity: 'info' });
-      } else {
-        const res = await fetch(`/api/admin/event-posts/${action}`, {
-          method: 'POST',
-          body: JSON.stringify({ id }),
-          headers: { 'Content-Type': 'application/json' },
-        });
+      const res = await fetch(`/api/admin/event-posts/${action}`, {
+        method: 'POST',
+        body: JSON.stringify({ id }),
+        headers: { 'Content-Type': 'application/json' },
+      });
 
-        if (!res.ok) throw new Error(`${action} failed`);
-        setEventPosts(prev => prev.filter(p => p.id !== id));
-        setSnackbar({ open: true, message: `Event ${action}ed`, severity: 'success' });
-      }
+      if (!res.ok) throw new Error(`${action} failed`);
+      setEventPosts(prev => prev.filter(p => p.id !== id));
+      setSnackbar({ open: true, message: `Event ${action}ed`, severity: 'success' });
     } catch (err) {
       setSnackbar({ open: true, message: err.message, severity: 'error' });
     }

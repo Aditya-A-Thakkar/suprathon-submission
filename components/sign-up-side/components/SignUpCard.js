@@ -12,8 +12,8 @@ import MuiLink from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { useRouter } from "next/navigation";
 
 const Card = styled(MuiCard)(({ theme }) => ({
 	display: 'flex',
@@ -34,30 +34,44 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export default function SignUpCard() {
+	const router = useRouter();
 	const [emailError, setEmailError] = React.useState(false);
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
 	const [passwordError, setPasswordError] = React.useState(false);
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-	const [open, setOpen] = React.useState(false);
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
+	const handleSubmit = async (event) => {
+		event.preventDefault();
 
-	const handleClose = () => {
-		setOpen(false);
-	};
-
-	const handleSubmit = (event) => {
 		if (emailError || passwordError) {
 			event.preventDefault();
 			return;
 		}
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get('email'),
-			password: data.get('password'),
-		});
+		const name = data.get('name');
+		const email = data.get('email');
+		const password = data.get('password');
+
+		try {
+			const res = await fetch('/api/auth/register', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ name, email, password }),
+			});
+
+			if (!res.ok) {
+				const errorData = await res.json();
+				alert(errorData.error || 'Registration failed');
+				return;
+			}
+
+			router.push('/login');
+		} catch (err) {
+			console.error(err);
+			alert('Something went wrong!');
+		}
 	};
 
 	const validateInputs = () => {
@@ -106,6 +120,21 @@ export default function SignUpCard() {
 				sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
 			>
 				<FormControl>
+					<FormLabel htmlFor="name">Name</FormLabel>
+					<TextField
+						id="name"
+						type="text"
+						name="name"
+						placeholder="Name"
+						autoComplete="name"
+						autoFocus
+						required
+						fullWidth
+						variant="outlined"
+						color='primary'
+					/>
+				</FormControl>
+				<FormControl>
 					<FormLabel htmlFor="email">Email</FormLabel>
 					<TextField
 						error={emailError}
@@ -123,6 +152,7 @@ export default function SignUpCard() {
 					/>
 				</FormControl>
 				<FormControl>
+					<FormLabel htmlFor="password">Password</FormLabel>
 					<TextField
 						error={passwordError}
 						helperText={passwordErrorMessage}
@@ -142,7 +172,6 @@ export default function SignUpCard() {
 					control={<Checkbox value="remember" color="primary" />}
 					label="Remember me"
 				/>
-				<ForgotPassword open={open} handleClose={handleClose} />
 				<Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
 					Register
 				</Button>

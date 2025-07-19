@@ -2,6 +2,8 @@ import ResponsiveAppBar from "@/components/navbar";
 import AppTheme from "@/components/shared-theme/AppTheme";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
+import { AuthProvider } from "@/hooks/useAuth";
+import Footer from "@/components/Footer";
 
 export const metadata = {
 	title: "Suprathon Submission",
@@ -12,13 +14,16 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body>
-				<AppRouterCacheProvider options={{ enableCssLayer: true }}>
-					<AppTheme>
-						<CssBaseline />
-						<ResponsiveAppBar />
-						{children}
-					</AppTheme>
-				</AppRouterCacheProvider>
+				<AuthProvider>
+					<AppRouterCacheProvider options={{ enableCssLayer: true }}>
+						<AppTheme>
+							<CssBaseline />
+							<ResponsiveAppBar />
+							{children}
+							<Footer />
+						</AppTheme>
+					</AppRouterCacheProvider>
+				</AuthProvider>
 			</body>
 		</html>
 	);
