@@ -94,13 +94,10 @@ export default function PostRequestPage() {
             </Typography>
             <List dense>
               <ListItem disablePadding>
-                <Link href="/post" underline="hover">Create a Post</Link>
+                <Link href="post-requests" underline="hover">Create a Post</Link>
               </ListItem>
               <ListItem disablePadding>
                 <Link href="/faq" underline="hover">FAQ</Link>
-              </ListItem>
-              <ListItem disablePadding>
-                <Link href="/events" underline="hover">All Events</Link>
               </ListItem>
             </List>
           </Paper>
