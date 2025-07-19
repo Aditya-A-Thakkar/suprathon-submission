@@ -27,9 +27,31 @@ export default function PostRequestPage() {
   const threeMonthsLater = new Date();
   threeMonthsLater.setMonth(today.getMonth() + 3);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title || !date || !description || !email) return;
-    setSubmitted(true);
+
+    try {
+      const res = await fetch('/api/post-requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title,
+          eventDate: date,
+          description,
+          contactEmail: email,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        alert(data.error || 'Submission failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Something went wrong.');
+    }
   };
 
   return (

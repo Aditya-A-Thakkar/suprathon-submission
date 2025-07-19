@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Typography,
@@ -10,73 +11,107 @@ import {
   CardContent,
   Button,
   Stack,
-  Divider,
+  CircularProgress,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 
 export default function ProfileLayout() {
   const [tabIndex, setTabIndex] = useState(0);
+  const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  const handleTabChange = (event, newValue) => {
-    setTabIndex(newValue);
-  };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await fetch('/api/profile');
+        const data = await res.json();
+        setUser(data.user);
+        setPosts(data.posts);
+      } catch (err) {
+        setSnackbar({ open: true, message: 'Failed to load profile', severity: 'error' });
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
 
-  const mockUser = {
-    name: 'Infectia Z',
-    email: 'infectia@example.com',
-    role: 'PROVIDER',
-  };
-
-  const mockPosts = [
-    { id: 1, title: 'Pending Event', status: 'pending' },
-    { id: 2, title: 'Approved Event', status: 'approved' },
-    { id: 3, title: 'Denied Event', status: 'denied' },
-  ];
-
-  const filteredPosts = mockPosts.filter((post) => {
-    if (tabIndex === 0) return post.status === 'pending';
-    if (tabIndex === 1) return post.status === 'approved';
-    return post.status === 'denied';
+  const filteredPosts = posts.filter((post) => {
+    if (tabIndex === 0) return post.approved === false;
+    return post.approved === true;
   });
 
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" sx={{ mt: 8 }}>
+          <CircularProgress />
+        </Box>
+    );
+  }
+
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Card variant="outlined" sx={{ mb: 4 }}>
-        <CardContent>
-          <Typography variant="h5" fontWeight="bold">
-            {mockUser.name}
-          </Typography>
-          <Typography color="text.secondary">{mockUser.email}</Typography>
-          <Typography color="text.secondary" sx={{ mt: 1 }}>
-            Role: {mockUser.role}
-          </Typography>
-        </CardContent>
-      </Card>
-
-      <Tabs value={tabIndex} onChange={handleTabChange} sx={{ mb: 2 }}>
-        <Tab label="Pending" />
-        <Tab label="Accepted" />
-        <Tab label="Denied" />
-      </Tabs>
-
-      <Stack spacing={2}>
-        {filteredPosts.map((post) => (
-          <Card key={post.id} variant="outlined">
-            <CardContent>
-              <Typography variant="h6">{post.title}</Typography>
-              {post.status === 'denied' && (
-                <Button color="error" sx={{ mt: 1 }}>
-                  Delete
-                </Button>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-        {filteredPosts.length === 0 && (
-          <Typography variant="body2" color="text.secondary" align="center">
-            No {['pending', 'accepted', 'denied'][tabIndex]} requests.
-          </Typography>
+      <Container maxWidth="md" sx={{ py: 4 }}>
+        {user && (
+            <Card variant="outlined" sx={{ mb: 4 }}>
+              <CardContent>
+                <Typography variant="h5" fontWeight="bold">
+                  {user.name}
+                </Typography>
+                <Typography color="text.secondary">{user.email}</Typography>
+                <Typography color="text.secondary" sx={{ mt: 1 }}>
+                  Role: {user.role}
+                </Typography>
+              </CardContent>
+            </Card>
         )}
-      </Stack>
-    </Container>
+
+        <Tabs value={tabIndex} onChange={(e, val) => setTabIndex(val)} sx={{ mb: 2 }}>
+          <Tab label="Pending" />
+          <Tab label="Accepted" />
+          {/*<Tab label="Denied" />*/}
+        </Tabs>
+
+        <Stack spacing={2}>
+          {filteredPosts.map((post) => (
+              <Card key={post.id} variant="outlined">
+                <CardContent>
+                  <Typography variant="h6">{post.title}</Typography>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    {post.description}
+                  </Typography>
+                  {post.approved === false && (
+                      <Button color="error" onClick={() => handleDelete(post.id)} sx={{ mt: 1 }}>
+                        Delete
+                      </Button>
+                  )}
+                </CardContent>
+              </Card>
+          ))}
+
+          {filteredPosts.length === 0 && (
+              <Typography variant="body2" color="text.secondary" align="center">
+                No {['pending', 'accepted', 'denied'][tabIndex]} requests.
+              </Typography>
+          )}
+        </Stack>
+
+        <Snackbar
+            open={snackbar.open}
+            autoHideDuration={4000}
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+        >
+          <Alert
+              severity={snackbar.severity}
+              onClose={() => setSnackbar({ ...snackbar, open: false })}
+              sx={{ width: '100%' }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </Container>
   );
 }

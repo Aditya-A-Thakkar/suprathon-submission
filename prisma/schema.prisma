@@ -11,7 +11,7 @@ model User {
   id        String      @id @default(uuid())
   name      String
   email     String      @unique
-  password  String // Hashed
+  password  String
   role      Role        @default(PROVIDER)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
@@ -27,8 +27,8 @@ model EventPost {
   approved     Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  postedBy     User     @relation(fields: [userId], references: [id])
   userId       String
+  postedBy     User     @relation(fields: [userId], references: [id])
 }
 
 enum Role {
