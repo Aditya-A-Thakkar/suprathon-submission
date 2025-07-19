@@ -13,10 +13,6 @@ export const feedbackCustomizations = {
 				'& .MuiAlert-icon': {
 					color: orange[500],
 				},
-				...theme.applyStyles('dark', {
-					backgroundColor: `${alpha(orange[900], 0.5)}`,
-					border: `1px solid ${alpha(orange[800], 0.5)}`,
-				}),
 			}),
 		},
 	},
@@ -37,9 +33,6 @@ export const feedbackCustomizations = {
 				height: 8,
 				borderRadius: 8,
 				backgroundColor: gray[200],
-				...theme.applyStyles('dark', {
-					backgroundColor: gray[800],
-				}),
 			}),
 		},
 	},
