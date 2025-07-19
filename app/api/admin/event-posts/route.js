@@ -10,6 +10,9 @@ export async function GET(req) {
 
 	try {
 		const posts = await prisma.eventPost.findMany({
+			where: {
+				approved: false,
+			},
 			orderBy: { createdAt: 'desc' },
 			include: {
 				postedBy: { select: { name: true, email: true } },

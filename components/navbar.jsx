@@ -26,7 +26,7 @@ const settings = [
 ];
 
 function ResponsiveAppBar() {
-	const { user } = useAuth();
+	const { user, logout } = useAuth();
 	const router = useRouter();
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -214,11 +214,10 @@ function ResponsiveAppBar() {
 									{settings.map((setting) => (
 										<MenuItem
 											key={setting.label}
-											onClick={() => {
+											onClick={async () => {
 												handleCloseUserMenu();
 												if (setting.action === 'logout') {
-													fetch('/api/auth/logout', { method: 'POST' })
-														.then(() =>router.push('/login'));
+													await logout();
 												} else if (setting.path) {
 													router.push(setting.path);
 												}
