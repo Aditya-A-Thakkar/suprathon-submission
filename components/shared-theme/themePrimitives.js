@@ -5,29 +5,29 @@ const defaultTheme = createTheme();
 const customShadows = [...defaultTheme.shadows];
 
 export const brand = {
-	50: 'hsl(210, 100%, 95%)',
-	100: 'hsl(210, 100%, 92%)',
-	200: 'hsl(210, 100%, 80%)',
-	300: 'hsl(210, 100%, 65%)',
-	400: 'hsl(210, 98%, 48%)',
-	500: 'hsl(210, 98%, 42%)',
-	600: 'hsl(210, 98%, 55%)',
-	700: 'hsl(210, 100%, 35%)',
-	800: 'hsl(210, 100%, 16%)',
-	900: 'hsl(210, 100%, 21%)',
+  50: '#e6e6ff',     // Very light tint
+  100: '#b3b3ff',    // Soft tint
+  200: '#8080ff',    // Light Indigo
+  300: '#4d4dff',    // Indigo Tint
+  400: '#1800ad',    // Vivid Indigo (Base color)
+  500: '#14009a',    // Slightly deeper
+  600: '#100088',    // Deeper, hover state
+  700: '#0c0075',    // Even darker
+  800: '#080062',    // Very dark
+  900: '#04004f',    // Near-black indigo
 };
 
 export const gray = {
-	50: 'hsl(220, 35%, 97%)',
-	100: 'hsl(220, 30%, 94%)',
-	200: 'hsl(220, 20%, 88%)',
-	300: 'hsl(220, 20%, 80%)',
-	400: 'hsl(220, 20%, 65%)',
-	500: 'hsl(220, 20%, 42%)',
-	600: 'hsl(220, 20%, 35%)',
-	700: 'hsl(220, 20%, 25%)',
-	800: 'hsl(220, 30%, 6%)',
-	900: 'hsl(220, 35%, 3%)',
+	50: '#e6e6ff',     // Very light tint
+  100: '#b3b3ff',    // Soft tint
+  200: '#8080ff',    // Light Indigo
+  300: '#4d4dff',    // Indigo Tint
+  400: '#1800ad',    // Vivid Indigo (Base color)
+  500: '#14009a',    // Slightly deeper
+  600: '#100088',    // Deeper, hover state
+  700: '#0c0075',    // Even darker
+  800: '#080062',    // Very dark
+  900: '#04004f',    // Near-black indigo
 };
 
 export const green = {
@@ -219,10 +219,10 @@ export const colorSchemes = {
 	light: {
 		palette: {
 			primary: {
-				light: brand[200],
-				main: brand[400],
-				dark: brand[700],
-				contrastText: brand[50],
+				light: brand[500],
+				main: brand[700],
+				dark: brand[900],
+				contrastText: '#ffffff',
 			},
 			info: {
 				light: brand[100],
@@ -254,8 +254,8 @@ export const colorSchemes = {
 				paper: 'hsl(220, 35%, 97%)',
 			},
 			text: {
-				primary: gray[800],
-				secondary: gray[600],
+				primary: brand[900],
+				secondary: brand[600],
 				warning: orange[400],
 			},
 			action: {
