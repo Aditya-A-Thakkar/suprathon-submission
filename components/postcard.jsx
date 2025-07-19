@@ -4,8 +4,8 @@ export default function PostCard({ post }) {
 	const { title, description, contactEmail, postedBy, startDateTime } = post;
 
 	return (
-		<Container sx={{ maxWidth: '1000px', mt: 10, mb: 12 }}>
-			<Paper elevation={3} sx={{ p: 5, borderRadius: 4 }}>
+		<Box sx={{ mt: 5, mb: 5, width: '100%' }}>
+			<Paper elevation={3} sx={{ p: 5, borderRadius: 4, maxWidth: '100%'}}>
 				<Typography variant="h4" align="center" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold' }}>
 					{title}
 				</Typography>
@@ -28,6 +28,6 @@ export default function PostCard({ post }) {
 					Event Date: {new Date(startDateTime).toLocaleString()}
 				</Typography>
 			</Paper>
-		</Container>
+		</Box>
 	);
 }
