@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AuthProvider } from "@/hooks/useAuth";
 import Footer from "@/components/Footer";
+import "./globals.css";
 
 export const metadata = {
 	title: "Eventory",
