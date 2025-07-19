@@ -1,12 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useAuth() {
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
-		// This is a placeholder: replace with actual logic to fetch user from cookie/localStorage or API
-		const userData = JSON.parse(localStorage.getItem('user'));
-		if (userData) setUser(userData);
+		const fetchUser = async () => {
+			try {
+				const res = await fetch('/api/auth/me');
+				if (res.ok) {
+					const data = await res.json();
+					setUser(data.user);
+				}
+			} catch (err) {
+				console.error('Auth check failed', err);
+			}
+		};
+
+		fetchUser();
 	}, []);
 
 	return { user, setUser };
