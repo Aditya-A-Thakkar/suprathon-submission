@@ -12,7 +12,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en">
+		<html lang="en" style={{ colorScheme: "light only" }}>
+			<head>
+				<meta name="color-scheme" content="light only"/>
+			</head>
 			<body>
 				<AuthProvider>
 					<AppRouterCacheProvider options={{ enableCssLayer: true }}>

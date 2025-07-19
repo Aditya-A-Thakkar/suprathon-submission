@@ -34,6 +34,9 @@ function AppTheme(props) {
             ...surfacesCustomizations,
             ...themeComponents,
           },
+            palette: {
+              mode: 'light',
+            }
         });
   }, [disableCustomTheme, themeComponents]);
   if (disableCustomTheme) {
