@@ -10,13 +10,40 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+
+const navButtonStyles = {
+	my: 2,
+	color: 'white',
+	display: 'block',
+	margin: '0 2%',
+	position: 'relative',
+	textTransform: 'none',
+	fontSize: '1rem',
+	fontWeight: 500,
+	fontFamily: 'inherit',
+	'&:after': {
+		content: '""',
+		position: 'absolute',
+		width: 0,
+		height: '2px',
+		bottom: 0,
+		left: 0,
+		backgroundColor: 'white',
+		transition: 'width 0.3s',
+	},
+	'&:hover': {
+		backgroundColor: 'transparent',
+	},
+	'&:hover:after': {
+		width: '100%',
+	},
+};
+
 
 const settings = [
 	{ label: 'Profile', path: '/profile' },
@@ -60,7 +87,7 @@ function ResponsiveAppBar() {
 							textDecoration: 'none',
 						}}
 					>
-						LOGO
+						EVENTORY
 					</Typography>
 
 					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -127,6 +154,9 @@ function ResponsiveAppBar() {
 								display: 'block',
 								margin: '0 2%',
 								position: 'relative',
+								fontSize: '1.1rem',
+								fontWeight: 500,
+								fontFamily: 'inherit',
 								'&:after': {
 									content: '""',
 									position: 'absolute',
@@ -158,6 +188,9 @@ function ResponsiveAppBar() {
 								display: 'block',
 								margin: '0 2%',
 								position: 'relative',
+								fontSize: '1.1rem',
+								fontWeight: 500,
+								fontFamily: 'inherit',
 								'&:after': {
 									content: '""',
 									position: 'absolute',
@@ -188,13 +221,53 @@ function ResponsiveAppBar() {
 								<Button
 									component={Link}
 									href="/profile"
-									sx={{ color: 'white', textTransform: 'none' }}
+									sx={{ color: 'white', 
+										textTransform: 'none',
+										fontSize: '1.1rem',
+										fontWeight: 500,
+										'&:after': {
+											content: '""',
+											position: 'absolute',
+											width: 0,
+											height: '2px',
+											bottom: 0,
+											left: 0,
+											backgroundColor: 'white',
+											transition: 'width 0.3s',
+										},
+										'&:hover': {
+											backgroundColor: 'transparent',
+										},
+										'&:hover:after': {
+											width: '100%',
+										} 
+									}}
 								>
 									My Profile
 								</Button>
 								<Button
 									onClick={logout}
-									sx={{ color: 'white', textTransform: 'none' }}
+									sx={{ color: 'white', 
+										textTransform: 'none',
+										fontSize: '1.1rem',
+										fontWeight: 500,
+										'&:after': {
+											content: '""',
+											position: 'absolute',
+											width: 0,
+											height: '2px',
+											bottom: 0,
+											left: 0,
+											backgroundColor: 'white',
+											transition: 'width 0.3s',
+										},
+										'&:hover': {
+											backgroundColor: 'transparent',
+										},
+										'&:hover:after': {
+											width: '100%',
+										},
+									}}
 								>
 									Logout
 								</Button>
@@ -205,7 +278,27 @@ function ResponsiveAppBar() {
 								<Button
 									component={Link}
 									href="/login"
-									sx={{ color: 'white', textTransform: 'none', mr: 1 }}
+									sx={{ color: 'white', 
+										textTransform: 'none',
+										fontSize: '1.1rem',
+										fontWeight: 500,
+										'&:after': {
+											content: '""',
+											position: 'absolute',
+											width: 0,
+											height: '2px',
+											bottom: 0,
+											left: 0,
+											backgroundColor: 'white',
+											transition: 'width 0.3s',
+										},
+										'&:hover': {
+											backgroundColor: 'transparent',
+										},
+										'&:hover:after': {
+											width: '100%',
+										},
+									}}
 								>
 									Are you a provider? Click here to login
 								</Button>
