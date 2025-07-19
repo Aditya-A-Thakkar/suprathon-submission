@@ -69,7 +69,7 @@ function ResponsiveAppBar() {
 
 	return (
 		<AppBar position="static">
-			<Container maxWidth="xl">
+			<Container maxWidth="xl" sx={{ backgroundColor: '#1800AD' }}>
 				<Toolbar disableGutters>
 					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 					<Typography
@@ -154,7 +154,7 @@ function ResponsiveAppBar() {
 								display: 'block',
 								margin: '0 2%',
 								position: 'relative',
-								fontSize: '1.1rem',
+								fontSize: '1.05rem',
 								fontWeight: 500,
 								fontFamily: 'inherit',
 								'&:after': {
@@ -188,7 +188,7 @@ function ResponsiveAppBar() {
 								display: 'block',
 								margin: '0 2%',
 								position: 'relative',
-								fontSize: '1.1rem',
+								fontSize: '1.05rem',
 								fontWeight: 500,
 								fontFamily: 'inherit',
 								'&:after': {
@@ -223,7 +223,7 @@ function ResponsiveAppBar() {
 									href="/profile"
 									sx={{ color: 'white', 
 										textTransform: 'none',
-										fontSize: '1.1rem',
+										fontSize: '1.05rem',
 										fontWeight: 500,
 										'&:after': {
 											content: '""',
@@ -249,7 +249,7 @@ function ResponsiveAppBar() {
 									onClick={logout}
 									sx={{ color: 'white', 
 										textTransform: 'none',
-										fontSize: '1.1rem',
+										fontSize: '1.05rem',
 										fontWeight: 500,
 										'&:after': {
 											content: '""',
@@ -280,7 +280,7 @@ function ResponsiveAppBar() {
 									href="/login"
 									sx={{ color: 'white', 
 										textTransform: 'none',
-										fontSize: '1.1rem',
+										fontSize: '1.05rem',
 										fontWeight: 500,
 										'&:after': {
 											content: '""',
