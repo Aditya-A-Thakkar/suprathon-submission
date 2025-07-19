@@ -55,6 +55,22 @@ export default function ProfileLayout() {
     );
   }
 
+    const handleDelete = async (id) => {
+        try {
+            const res = await fetch('/api/posts', {
+                method: 'DELETE',
+                body: JSON.stringify({ id }),
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            });
+            if (!res.ok) throw new Error('Delete failed');
+            setPosts((prevPosts) => prevPosts.filter((p) => p.id !== id));
+            setSnackbar({ open: true, message: 'Event deleted', severity: 'success' });
+        } catch (err) {
+            setSnackbar({ open: true, message: err.message, severity: 'error' });
+        }
+    };
+
   return (
       <Container maxWidth="md" sx={{ py: 4 }}>
         {user && (
