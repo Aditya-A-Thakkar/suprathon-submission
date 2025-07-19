@@ -10,25 +10,30 @@ import {
   Stack,
   FormControl,
   FormLabel,
+  MenuItem,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers';
 
 export default function PostRequestPage() {
   const [submitted, setSubmitted] = useState(false);
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState(null);
+  const [type, setType] = useState('Workshop');
+  const [where, setWhere] = useState('');
+  const [startDateTime, setStartDateTime] = useState(null);
+  const [endDateTime, setEndDateTime] = useState(null);
   const [description, setDescription] = useState('');
   const [email, setEmail] = useState('');
+  const descriptionRef = useRef(null);
 
   const today = new Date();
   const threeMonthsLater = new Date();
   threeMonthsLater.setMonth(today.getMonth() + 3);
 
   const handleSubmit = async () => {
-    if (!title || !date || !description || !email) return;
+    if (!title || !type || !where || !startDateTime || !endDateTime || !description || !email) return;
 
     try {
       const res = await fetch('/api/post-requests', {
@@ -36,7 +41,10 @@ export default function PostRequestPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title,
-          eventDate: date,
+          type,
+          where,
+          startDateTime,
+          endDateTime,
           description,
           contactEmail: email,
         }),
@@ -54,6 +62,14 @@ export default function PostRequestPage() {
     }
   };
 
+  useEffect(() => {
+    const el = descriptionRef.current;
+    if (el) {
+      el.style.height = 'auto';
+      el.style.height = Math.min(el.scrollHeight, 300) + 'px';
+    }
+  }, [description]);
+
   return (
     <Container maxWidth="sm" sx={{ mt: 10, mb: 12 }}>
       {!submitted ? (
@@ -68,7 +84,7 @@ export default function PostRequestPage() {
           </Typography>
 
           <Stack spacing={4} mt={4}>
-            {/* Title Field */}
+            {/* Title */}
             <FormControl fullWidth>
               <FormLabel sx={{ fontWeight: 600, mb: 1 }}>Title of Event</FormLabel>
               <TextField
@@ -76,49 +92,117 @@ export default function PostRequestPage() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
+                sx={{ backgroundColor: 'white' }}
               />
             </FormControl>
 
-            {/* Date Picker */}
+            {/* Type */}
             <FormControl fullWidth>
-              <FormLabel sx={{ fontWeight: 600, mb: 1 }}>Event Date</FormLabel>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  value={date}
-                  onChange={(newValue) => setDate(newValue)}
+              <FormLabel sx={{ fontWeight: 600, mb: 1 }}>Type of Event</FormLabel>
+              <TextField
+                select
+                variant="outlined"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                required
+                sx={{ backgroundColor: 'white' }}
+              >
+                {['Workshop', 'Seminar', 'Webinar', 'Conference', 'Course', 'Other'].map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </FormControl>
+
+            {/* Where */}
+            <FormControl fullWidth>
+              <FormLabel sx={{ fontWeight: 600, mb: 1 }}>Where</FormLabel>
+              <TextField
+                variant="outlined"
+                value={where}
+                onChange={(e) => setWhere(e.target.value)}
+                placeholder="Please specify the location or platform"
+                required
+                sx={{ backgroundColor: 'white' }}
+              />
+            </FormControl>
+
+            {/* Start & End DateTime */}
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <FormControl fullWidth>
+                <FormLabel sx={{ fontWeight: 600, mb: 1 }}>Start Date & Time</FormLabel>
+                <DateTimePicker
+                  value={startDateTime}
+                  onChange={(newValue) => setStartDateTime(newValue)}
                   minDate={today}
                   maxDate={threeMonthsLater}
                   slotProps={{
                     textField: {
                       required: true,
                       fullWidth: true,
+                      sx: { backgroundColor: 'white' },
                     },
                   }}
                 />
-              </LocalizationProvider>
-            </FormControl>
+              </FormControl>
+
+              <FormControl fullWidth>
+                <FormLabel sx={{ fontWeight: 600, mb: 1 }}>End Date & Time</FormLabel>
+                <DateTimePicker
+                  value={endDateTime}
+                  onChange={(newValue) => setEndDateTime(newValue)}
+                  minDate={startDateTime || today}
+                  maxDate={threeMonthsLater}
+                  slotProps={{
+                    textField: {
+                      required: true,
+                      fullWidth: true,
+                      sx: { backgroundColor: 'white' },
+                    },
+                  }}
+                />
+              </FormControl>
+            </LocalizationProvider>
 
             {/* Description */}
             <FormControl fullWidth>
-                <FormLabel sx={{ fontWeight: 600, mb: 1 }}>Event Description</FormLabel>
-                <TextField id="outlined-multiline-static"
-                    multiline
-                    rows = {4}
-                    maxRows={12}
-                    inputProps={{ maxLength: 1000 }}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    helperText={`${description.length}/1000 characters`}
-                    required
-                    sx={{
-                    '& textarea': {
-                        overflow: 'hidden',
-                        resize: 'none',
-                    },
-                    }}
+              <FormLabel sx={{ fontWeight: 600, mb: 1 }}>Event Description</FormLabel>
+              <Box
+                sx={{
+                  border: '1px solid #ccc',
+                  borderRadius: 2,
+                  p: 1.5,
+                  bgcolor: 'white',
+                }}
+              >
+                <textarea
+                  ref={descriptionRef}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Enter a description of the event..."
+                  maxLength={1000}
+                  rows={5}
+                  style={{
+                    width: '100%',
+                    border: 'none',
+                    resize: 'none',
+                    overflowY: 'auto',
+                    fontSize: '1rem',
+                    fontFamily: 'inherit',
+                    lineHeight: 1.6,
+                    backgroundColor: 'transparent',
+                    outline: 'none',
+                  }}
                 />
+                <Typography
+                  variant="caption"
+                  sx={{ mt: 0.5, display: 'block', textAlign: 'right', color: 'text.secondary' }}
+                >
+                  {description.length}/1000 characters
+                </Typography>
+              </Box>
             </FormControl>
-
 
             {/* Email */}
             <FormControl fullWidth>
@@ -128,17 +212,17 @@ export default function PostRequestPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                sx={{ backgroundColor: 'white' }}
               />
             </FormControl>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <Box textAlign="center" mt={3}>
               <Button
                 variant="contained"
                 color="primary"
                 size="large"
                 onClick={handleSubmit}
-                //disabled={!title || !date || !description || !email}
                 sx={{ px: 4, py: 1.5, textTransform: 'none', fontWeight: 'bold' }}
               >
                 Request for Approval
