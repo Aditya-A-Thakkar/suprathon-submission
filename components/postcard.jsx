@@ -6,18 +6,18 @@ export default function PostCard({ post }) {
 	return (
 		<Box sx={{ mt: 5, mb: 5, width: '100%' }}>
 			<Paper elevation={3} sx={{ p: 5, borderRadius: 4, maxWidth: '100%'}}>
-				<Typography variant="h4" align="center" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold' }}>
+				<Typography variant="h4" align="center" gutterBottom sx={{ color: '#1800AD', fontWeight: 'bold' }}>
 					{title}
 				</Typography>
 
 				<Typography variant="h6" align="center" gutterBottom sx={{ color: 'text.secondary', mb: 5 }}>
 					Author –{' '}
-					<Box component="span" sx={{ color: 'primary.dark', fontWeight: 700 }}>
+					<Box component="span" sx={{ color: '#1800AD', fontWeight: 700 }}>
 						{postedBy?.name ?? 'Unknown'}
 					</Box>
 				</Typography>
 
-				<Box sx={{ borderLeft: 4, borderColor: 'primary.light', pl: 3, my: 4 }}>
+				<Box sx={{ borderLeft: 4, borderColor: '#1800AD', pl: 3, my: 4 }}>
 					<Typography variant="body1" sx={{ fontSize: '1.15rem', lineHeight: 1.8 }}>
 						{description}
 					</Typography>

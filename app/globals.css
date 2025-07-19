@@ -3,4 +3,6 @@ html, body {
     color: black !important;
     color-scheme: light only;
     forced-color-adjust: none;
+    max-width: 100%;
+    overflow-x: hidden;
 }
