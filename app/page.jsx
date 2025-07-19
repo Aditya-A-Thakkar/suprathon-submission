@@ -10,7 +10,10 @@ export default function Home() {
   useEffect(() => {
     fetch('/api/posts')
         .then((res) => res.json())
-        .then(setPosts)
+        .then((data) => {
+          console.log(data);
+          setPosts(data);
+        })
         .catch((err) => console.error('Error loading posts:', err));
   }, []);
 

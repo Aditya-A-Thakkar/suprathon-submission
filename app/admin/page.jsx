@@ -87,7 +87,7 @@ export default function AdminEventPage() {
                     <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
                         <EventIcon fontSize="small" />
                         <Typography variant="body2">
-                        {new Date(post.eventDate).toLocaleString(undefined, {
+                        {new Date(post.startDateTime).toLocaleString(undefined, {
                             dateStyle: 'medium',
                             timeStyle: 'short',
                         })}
