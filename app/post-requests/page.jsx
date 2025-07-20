@@ -16,8 +16,10 @@ import { useState, useRef, useEffect } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DateTimePicker } from '@mui/x-date-pickers';
+import { useSnackbar } from "@/components/SnackbarProvider";
 
 export default function PostRequestPage() {
+  const showSnackbar = useSnackbar();
   const [submitted, setSubmitted] = useState(false);
   const [title, setTitle] = useState('');
   const [tag, setTag] = useState('Workshop');
@@ -54,11 +56,13 @@ export default function PostRequestPage() {
       if (res.ok) {
         setSubmitted(true);
       } else {
-        alert(data.error || 'Submission failed');
+        // alert(data.error || 'Submission failed');
+        showSnackbar(data.error || 'Submission failed', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('Something went wrong.');
+      // alert('Something went wrong.');
+      showSnackbar(`Something went wrong`, 'error');
     }
   };
 

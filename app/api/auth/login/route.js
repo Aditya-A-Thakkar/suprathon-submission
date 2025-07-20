@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export async function POST(req) {
 	try {
-		const { email, password } = await req.json();
+		const { email, password, rememberMe } = await req.json();
 
 		if (!email || !password) {
 			return NextResponse.json({ error: 'Missing email or password' }, { status: 400 });
@@ -22,13 +22,13 @@ export async function POST(req) {
 			return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
 		}
 
-		const token = await createJWT({ id: user.id, email: user.email, role: user.role });
+		const token = await createJWT({ id: user.id, email: user.email, role: user.role }, rememberMe);
 
 		const res = NextResponse.json({ success: true, user: { email: user.email, role: user.role } });
 		res.cookies.set('token', token, {
 			httpOnly: true,
 			path: '/',
-			maxAge: 60 * 60 * 24 * 7,
+			maxAge: rememberMe ? 60 * 60 * 24 * 30 : 60 * 60,
 		});
 
 		return res;

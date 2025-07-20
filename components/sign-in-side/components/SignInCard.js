@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
 import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -13,8 +12,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
-import { GoogleIcon, FacebookIcon } from './CustomIcons';
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "@/components/SnackbarProvider";
 
 const Card = styled(MuiCard)(({ theme }) => ({
 	display: 'flex',
@@ -36,6 +35,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
 
 export default function SignInCard() {
 	const router = useRouter();
+	const showSnackbar = useSnackbar();
 	const [emailError, setEmailError] = React.useState(false);
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
 	const [passwordError, setPasswordError] = React.useState(false);
@@ -59,17 +59,19 @@ export default function SignInCard() {
 		const data = new FormData(event.currentTarget);
 		const email = data.get('email');
 		const password = data.get('password');
+		const rememberMe = data.get('remember') === 'on';
 
 		try {
 			const res = await fetch('/api/auth/login', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ email, password }),
+				body: JSON.stringify({ email, password, rememberMe }),
 			});
 
 			const result = await res.json();
 			if (!res.ok) {
-				alert(result.error || 'Login failed');
+				// alert(result.error || 'Login failed');
+				showSnackbar(result.error || 'Login failed', 'error');
 				console.log(result.error);
 				return;
 			}
@@ -78,7 +80,8 @@ export default function SignInCard() {
 			router.push('/post-requests');
 		} catch (err) {
 			console.error(err);
-			alert(`Something went wrong:- ${err}`);
+			// alert(`Something went wrong:- ${err}`);
+			showSnackbar(`Something went wrong ${err}`, 'error');
 		}
 	};
 
@@ -198,17 +201,6 @@ export default function SignInCard() {
 			            </MuiLink>
 					</span>
 				</Typography>
-			</Box>
-			<Divider>or</Divider>
-			<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-				<Button
-					fullWidth
-					variant="outlined"
-					onClick={() => alert('Sign in with Google')}
-					startIcon={<GoogleIcon />}
-				>
-					Sign in with Google
-				</Button>
 			</Box>
 		</Card>
 	);

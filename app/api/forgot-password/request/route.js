@@ -22,7 +22,7 @@ export async function POST(req) {
 		},
 	});
 
-	await sendResetEmail(user.email, token); // implement this
+	await sendResetEmail(user.email, token);
 
 	return NextResponse.json({ message: 'If account exists, email sent.' });
 }

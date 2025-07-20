@@ -2,18 +2,15 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
-import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import NextLink from 'next/link';
 import MuiLink from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { GoogleIcon } from './CustomIcons';
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "@/components/SnackbarProvider";
 
 const Card = styled(MuiCard)(({ theme }) => ({
 	display: 'flex',
@@ -35,6 +32,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
 
 export default function SignUpCard() {
 	const router = useRouter();
+	const showSnackbar = useSnackbar();
 	const [emailError, setEmailError] = React.useState(false);
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
 	const [passwordError, setPasswordError] = React.useState(false);
@@ -63,14 +61,16 @@ export default function SignUpCard() {
 
 			if (!res.ok) {
 				const errorData = await res.json();
-				alert(errorData.error || 'Registration failed');
+				// alert(errorData.error || 'Registration failed');
+				showSnackbar(errorData.error || 'Registration failed.', 'error');
 				return;
 			}
 
 			router.push('/login');
 		} catch (err) {
 			console.error(err);
-			alert('Something went wrong!');
+			// alert('Something went wrong!');
+			showSnackbar('Something went wrong', 'error');
 		}
 	};
 
@@ -177,10 +177,6 @@ export default function SignUpCard() {
 						}}}
 					/>
 				</FormControl>
-				<FormControlLabel
-					control={<Checkbox value="remember" color="primary" />}
-					label="Remember me"
-				/>
 				<Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
 					Register
 				</Button>
@@ -197,17 +193,6 @@ export default function SignUpCard() {
             </MuiLink>
           </span>
 				</Typography>
-			</Box>
-			<Divider>or</Divider>
-			<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-				<Button
-					fullWidth
-					variant="outlined"
-					onClick={() => alert('Sign in with Google')}
-					startIcon={<GoogleIcon />}
-				>
-					Sign in with Google
-				</Button>
 			</Box>
 		</Card>
 	);
