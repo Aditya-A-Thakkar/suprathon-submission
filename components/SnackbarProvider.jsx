@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-const SnackbarContext = createContext((message, severity) => {});
+const SnackbarContext = createContext(() => {});
 
 export function useSnackbar() {
 	return useContext(SnackbarContext);
@@ -12,7 +12,7 @@ export function useSnackbar() {
 export const SnackbarProvider = ({ children }) => {
 	const [open, setOpen] = useState(false);
 	const [message, setMessage] = useState('');
-	const [severity, setSeverity] = useState<'success' | 'error' | 'info' | 'warning'>('info');
+	const [severity, setSeverity] = useState('info');
 
 	const showSnackbar = (msg, sev = 'info') => {
 		setMessage(msg);
